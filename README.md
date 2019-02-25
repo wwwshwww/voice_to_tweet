@@ -18,6 +18,10 @@
 ## Start v2t
 after test of above, `product/voice_to_tweet.py` is runnable. 
 
+### Demo Twitter Account
+#### @sugoi_majide
+[![@sugoi_majide](https://pbs.twimg.com/profile_images/1051660323394973697/3jKTozlj.jpg)](https://twitter.com/sugoi_majide)
+
 ## JSON Specification
 in `parts/info/`
 ### twitter_api.json
