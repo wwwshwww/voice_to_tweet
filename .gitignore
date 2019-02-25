@@ -1,0 +1,6 @@
+.DS_STORE
+Tokens.txt
+Twitter API.txt
+Voice_To_Twitter.md
+parts/info/*.json
+parts/tool/__pycache__
