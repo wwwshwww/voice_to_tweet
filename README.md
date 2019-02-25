@@ -1,7 +1,7 @@
 # Voice To Tweet
 ## Preparation
 ### Twitter
-1. achieve to useable API of `Twitter`
+1. achieve to useable API of Twitter
 2. create `twitter_api.json` into `parts/info/`
 3. run `parts/twitter/OAuth_test.py` and access outputted URL
 4. accept twitter authenticate with an account you want to tweet
@@ -11,7 +11,7 @@
 8. test to tweet by to run `parts/twitter/tweet_test.py`
 
 ### Watson - Speech to Text
-1. achieve to useable API of `Watson - Speech to Text`
+1. achieve to useable API of Watson - Speech to Text
 2. create `speech_to_text_api.json` into `parts/info/`
 3. run `parts/voice/record_to_text_loop.py` and check availability of able convert voice to text
 
