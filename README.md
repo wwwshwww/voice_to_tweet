@@ -78,6 +78,6 @@ Default: `en-US_BroadbandModel`
 
 ## External link
 ### Twitter Developer Page
-[https://developer.twitter.com/en.html](https://developer.twitter.com/en.html){:target="_blank}
+[https://developer.twitter.com/en.html](https://developer.twitter.com/en.html){:target="_blank"}
 ### IBM Watson Speech to Text
-[https://www.ibm.com/watson/services/speech-to-text/](https://www.ibm.com/watson/services/speech-to-text/){:target="_blank}
+[https://www.ibm.com/watson/services/speech-to-text/](https://www.ibm.com/watson/services/speech-to-text/){:target="_blank"}
