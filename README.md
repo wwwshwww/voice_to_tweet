@@ -79,4 +79,5 @@ Default: `en-US_BroadbandModel`
 ## External link
 ### Twitter Developer Page
 [https://developer.twitter.com/en.html](https://developer.twitter.com/en.html)
+### IBM Watson Speech to Text
 [https://www.ibm.com/watson/services/speech-to-text/](https://www.ibm.com/watson/services/speech-to-text/)
