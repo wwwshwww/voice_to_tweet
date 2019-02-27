@@ -45,7 +45,7 @@ auth = twitter.OAuth(consumer_key=t_api_key,
 
 t = twitter.Twitter(auth=auth)
 
-def send_to_watson():
+def sendToSTT():
     audio_file = open("sample.wav", "rb")
     stt = SpeechToTextV1(username=USER, password=PSWD)
     result = stt.recognize(audio=audio_file,
@@ -56,7 +56,7 @@ def send_to_watson():
         text += result_dict["results"][i]["alternatives"][0]["transcript"]
     return text
 
-def setup_recording():
+def setupRecording():
     global frames
     global audio
     global stream
@@ -72,8 +72,8 @@ def record():
     data = stream.read(CHUNK, exception_on_overflow=False)
     frames.append(data)
 
-def record_complete():
-    close_all()
+def recordComplete():
+    closeAll()
     waveFile = wave.open(WAVE_FILENAME, 'wb')
     waveFile.setnchannels(CHANNELS)
     waveFile.setsampwidth(audio.get_sample_size(FORMAT))
@@ -81,7 +81,7 @@ def record_complete():
     waveFile.writeframes(b''.join(frames))
     waveFile.close()
 
-def close_all():
+def closeAll():
     stream.stop_stream()
     stream.close()
     audio.terminate()
@@ -111,12 +111,12 @@ def getkey():
 
     return chr
 
-def check_start():
+def checkStart():
     try:   
         while 1:
             key = getkey()
             if key == SWITCH_KEY:
-                setup_recording()
+                setupRecording()
                 print("recording now...")
                 break
     finally:
@@ -124,12 +124,12 @@ def check_start():
         fcntl.fcntl(FNO, fcntl.F_SETFL, FCNTL_OLD)
         termios.tcsetattr(FNO, termios.TCSANOW, ATTR_OLD)
 
-def check_stop():
+def checkStop():
     while 1:
         record()
         key = getkey()
         if key == SWITCH_KEY:
-            record_complete()
+            recordComplete()
             print("Successful recording!")
             break
 
@@ -141,10 +141,10 @@ if __name__ == "__main__":
         print("\n<<=========== Voice To Tweet ===========>>\n")
         print("Press ENTER to start or stop recording.\n"+
             "Do you want to exit? Then type Ctrl+C!")
-        check_start()
-        check_stop()
+        checkStart()
+        checkStop()
         print("converting...")
-        te = send_to_watson()
+        te = sendToSTT()
         print("\""+te+"\"")
         if len(te) > 0:
             tweet(tweet_text=te)

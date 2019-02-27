@@ -49,7 +49,7 @@ auth = twitter.OAuth(consumer_key=t_api_key,
 
 t = twitter.Twitter(auth=auth)
 
-def send_to_watson():
+def sendToSTT():
     audio_file = open("sample.wav", "rb")
     stt = SpeechToTextV1(username=USER, password=PSWD)
     result = stt.recognize(audio=audio_file,
@@ -60,7 +60,7 @@ def send_to_watson():
         text += result_dict["results"][i]["alternatives"][0]["transcript"]
     return text
 
-def setup_recording():
+def setupRecording():
     global frames, audio, stream, now_record, now_silent
     frames = []
     audio = pyaudio.PyAudio() # pyaudio.PyAudio()
@@ -78,11 +78,11 @@ def record(data):
     frames.append(data)
     now_record += 1
 
-def get_data():
+def getData():
     return stream.read(CHUNK, exception_on_overflow=False)
 
-def record_complete():
-    close_all()
+def recordComplete():
+    closeAll()
     waveFile = wave.open(WAVE_FILENAME, 'wb')
     waveFile.setnchannels(CHANNELS)
     waveFile.setsampwidth(audio.get_sample_size(FORMAT))
@@ -90,38 +90,38 @@ def record_complete():
     waveFile.writeframes(b''.join(frames))
     waveFile.close()
 
-def close_all():
+def closeAll():
     stream.stop_stream()
     stream.close()
     audio.terminate()
 
-def check_level(s):
+def checkLevel(s):
     level = np.frombuffer(s, dtype='int16') / 32768.0
     return level.max() > THRESHOULD
 
-def check_start():
+def checkStart():
     while 1:
-        data = get_data()
-        if check_level(data):
+        data = getData()
+        if checkLevel(data):
             print("recording now...")
             record(data)
             break
 
-def check_stop():
+def checkStop():
     global now_silent, now_record
     while 1:
-        data = get_data()
-        if check_level(data):
+        data = getData()
+        if checkLevel(data):
             now_silent = 0
         else:
             now_silent += 1
             if now_silent > SILENT_LIMIT_GLOBAL:
-                record_complete()
+                recordComplete()
                 print("Successful recording!")
                 break
         record(data)
         if now_record > RECORD_LIMIT_GLOBAL:
-            record_complete()
+            recordComplete()
             print("Stop and Success recording because spent 30 seconds.")
             break
 
@@ -131,11 +131,11 @@ def tweet(tweet_text):
 if __name__ == "__main__":
     while 1:  
         print("\n<<=========== Voice To Tweet -Auto mode- ===========>>\n")
-        setup_recording()
-        check_start()
-        check_stop()
+        setupRecording()
+        checkStart()
+        checkStop()
         print("converting...")
-        te = send_to_watson()
+        te = sendToSTT()
         print("\""+te+"\"")
         if len(te) > 0:
             tweet(tweet_text=te)
