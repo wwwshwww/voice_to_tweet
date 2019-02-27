@@ -21,11 +21,15 @@ CHUNK = 2**11            # データ点数
 USER, PSWD, LANG = getter.getSpeechToTextAPIConsumer()
 CONT_TYPE = "audio/wav"
 
-THRESHOULD = 0.01 # 録音開始閾値
-TIME = 1.5 # 無音時間
-TIME_GLOBAL = RATE / CHUNK * TIME
+RECORD_LIMIT = 30
+RECORD_LIMIT_GLOBAL = RATE / CHUNK * RECORD_LIMIT
 
-now = 0
+THRESHOULD = 0.015 # 録音開始閾値
+SILENT_LIMIT = 1.2 # 無音時間
+SILENT_LIMIT_GLOBAL = RATE / CHUNK * SILENT_LIMIT
+
+now_record = 0
+now_silent = 0
 
 t_api_key, t_api_secret, _ = getter.getTwitterAPIConsumer()
 token, token_secret, _, _ = getter.getTwitterAccess()
@@ -57,10 +61,7 @@ def send_to_watson():
     return text
 
 def setup_recording():
-    global frames
-    global audio
-    global stream
-    global now
+    global frames, audio, stream, now_record, now_silent
     frames = []
     audio = pyaudio.PyAudio() # pyaudio.PyAudio()
  
@@ -69,10 +70,13 @@ def setup_recording():
             input_device_index = iDeviceIndex,
             frames_per_buffer=CHUNK)
 
-    now = 0
+    now_record = 0
+    now_silent = 0
 
 def record(data):
+    global now_record
     frames.append(data)
+    now_record += 1
 
 def get_data():
     return stream.read(CHUNK, exception_on_overflow=False)
@@ -104,19 +108,22 @@ def check_start():
             break
 
 def check_stop():
-    global now
+    global now_silent, now_record
     while 1:
         data = get_data()
         if check_level(data):
-            now = 0
+            now_silent = 0
         else:
-            now += 1
-            if now > TIME_GLOBAL:
+            now_silent += 1
+            if now_silent > SILENT_LIMIT_GLOBAL:
                 record_complete()
                 print("Successful recording!")
                 break
         record(data)
-            
+        if now_record > RECORD_LIMIT_GLOBAL:
+            record_complete()
+            print("Stop and Success recording because spent 30 seconds.")
+            break
 
 def tweet(tweet_text):
     t.statuses.update(status=tweet_text)
