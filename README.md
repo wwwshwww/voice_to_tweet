@@ -24,7 +24,7 @@ after test of above, `product/voice_to_tweet.py` is runnable.
 
 ## JSON Specification
 in `parts/info/`
-### twitter_api.json
+### **twitter_api.json**
 ```
 {
     "twitter_api_key": "<consumer API key>",
@@ -32,14 +32,14 @@ in `parts/info/`
     "oauth_callback": "<callback URL>"
 }
 ```
-### twitter_oauth.json
+### **twitter_oauth.json**
 ```
 {
     "oauth_token": "<oauth token>",
     "oauth_verifier": "<oauth verifier>"
 }
 ```
-### twitter_access.json
+### **twitter_access.json**
 ```
 {
     "oauth_token": "<twitter oauth token>",
@@ -48,14 +48,14 @@ in `parts/info/`
     "screen_name": "<twitter user name (@****) >"
 }
 ```
-### peech_to_text_api.json or speech_to_text_api_old.json
-#### speech_to_text_api.json
+### **peech_to_text_api.json** or **speech_to_text_api_old.json**
+#### **speech_to_text_api.json**
 ```
     "api_key": "<api key>",
     "url": "<api url, default: `https://gateway-tok.watsonplatform.net/speech-to-text/api`>",
     "lang_model": "ja-JP_BroadbandModel"
 ```
-#### speech_to_text_api_old.json
+#### **speech_to_text_api_old.json**
 ```
 {
     "user": "<api user name>",
