@@ -37,7 +37,6 @@ token, token_secret, _, _ = getter.getTwitterAccess()
 audio = pyaudio.PyAudio() #pyaudio.PyAudio()
 stream = audio.open(format=FORMAT, channels=CHANNELS,
         rate=RATE, input=True,
-        input_device_index = iDeviceIndex, 
         frames_per_buffer=CHUNK)
 frames = []
 
@@ -67,7 +66,6 @@ def setupRecording():
  
     stream = audio.open(format=FORMAT, channels=CHANNELS,
             rate=RATE, input=True,
-            input_device_index = iDeviceIndex,
             frames_per_buffer=CHUNK)
 
     now_record = 0
