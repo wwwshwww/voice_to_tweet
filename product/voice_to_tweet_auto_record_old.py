@@ -21,7 +21,7 @@ CHUNK = 2**11            # データ点数
 USER, PSWD, LANG = getter.getSpeechToTextAPIConsumer_old()
 CONT_TYPE = "audio/wav"
 
-RECORD_LIMIT = 30
+RECORD_LIMIT = 20
 RECORD_LIMIT_GLOBAL = RATE / CHUNK * RECORD_LIMIT
 
 THRESHOULD = 0.015 # 録音開始閾値
