@@ -18,7 +18,7 @@ CHANNELS = 1             # モノラル
 RATE = 44100             # サンプルレート
 CHUNK = 2**11            # データ点数
 
-KEY, LANG = getter.getSpeechToTextAPIConsumer()
+KEY, URL, LANG = getter.getSpeechToTextAPIConsumer()
 CONT_TYPE = "audio/wav"
 
 RECORD_LIMIT = 20
@@ -50,7 +50,7 @@ t = twitter.Twitter(auth=auth)
 
 def sendToSTT():
     audio_file = open("sample.wav", "rb")
-    stt = SpeechToTextV1(iam_apikey=KEY)
+    stt = SpeechToTextV1(iam_apikey=KEY, url=URL)
     result = stt.recognize(audio=audio_file,
             content_type=CONT_TYPE, model=LANG)
     result_dict = result.get_result()

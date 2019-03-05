@@ -32,4 +32,4 @@ def getSpeechToTextAPIConsumer():
     path = this_path + '/../info/speech_to_text_api.json'
     msg = 'please create `speech_to_text_api.json` that have SpeechToText API info to info/'
     data = opener.getInfo(path, msg)
-    return data['api_key'], data['lang_model']
+    return data['api_key'], data['url'], data['lang_model']

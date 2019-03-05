@@ -48,7 +48,7 @@ in `parts/info/`
     "screen_name": "<twitter user name (@****) >"
 }
 ```
-### speech_to_text_api.json
+### speech_to_text_api_old.json
 ```
 {
     "user": "<api user name>",
