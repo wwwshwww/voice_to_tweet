@@ -22,8 +22,14 @@ def getTwitterAccess():
     data = opener.getInfo(path, msg)
     return data['oauth_token'], data['oauth_token_secret'], data['user_id'], data['screen_name']
 
+def getSpeechToTextAPIConsumer_old():
+    path = this_path + '/../info/speech_to_text_api_old.json'
+    msg = 'please create `speech_to_text_api_old.json` that have SpeechToText API info to info/'
+    data = opener.getInfo(path, msg)
+    return data['user'], data['pswd'], data['lang_model']
+
 def getSpeechToTextAPIConsumer():
     path = this_path + '/../info/speech_to_text_api.json'
     msg = 'please create `speech_to_text_api.json` that have SpeechToText API info to info/'
     data = opener.getInfo(path, msg)
-    return data['user'], data['pswd'], data['lang_model']
+    return data['api_key'], data['lang_model']
