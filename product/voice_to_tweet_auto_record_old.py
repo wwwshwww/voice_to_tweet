@@ -18,7 +18,7 @@ CHANNELS = 1             # モノラル
 RATE = 44100             # サンプルレート
 CHUNK = 2**11            # データ点数
 
-USER, PSWD, LANG = getter.getSpeechToTextAPIConsumer()
+USER, PSWD, LANG = getter.getSpeechToTextAPIConsumer_old()
 CONT_TYPE = "audio/wav"
 
 RECORD_LIMIT = 30
