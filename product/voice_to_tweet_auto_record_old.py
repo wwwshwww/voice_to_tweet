@@ -25,7 +25,7 @@ RECORD_LIMIT = 20
 RECORD_LIMIT_GLOBAL = RATE / CHUNK * RECORD_LIMIT
 
 THRESHOULD = 0.015 # 録音開始閾値
-SILENT_LIMIT = 1.0 # 無音時間
+SILENT_LIMIT = 1.5 # 無音時間
 SILENT_LIMIT_GLOBAL = RATE / CHUNK * SILENT_LIMIT
 
 now_record = 0
@@ -56,7 +56,7 @@ def sendToSTT():
     result_dict = result.get_result()
     text = ""
     for i in range(len(result_dict["results"])):
-        text += result_dict["results"][i]["alternatives"][0]["transcript"]
+        text += result_dict["results"][i]["alternatives"][0]["transcript"] + '\n'
     return text
 
 def setupRecording():
@@ -134,7 +134,7 @@ if __name__ == "__main__":
         checkStop()
         print("converting...")
         te = sendToSTT()
-        print("\""+te+"\"")
+        print('\n'+te)
         if len(te) > 0:
             tweet(tweet_text=te)
             print("Tweeted!")
