@@ -48,7 +48,14 @@ in `parts/info/`
     "screen_name": "<twitter user name (@****) >"
 }
 ```
-### speech_to_text_api_old.json
+### peech_to_text_api.json or speech_to_text_api_old.json
+#### speech_to_text_api.json
+```
+    "api_key": "<api key>",
+    "url": "<api url, default: `https://gateway-tok.watsonplatform.net/speech-to-text/api`>",
+    "lang_model": "ja-JP_BroadbandModel"
+```
+#### speech_to_text_api_old.json
 ```
 {
     "user": "<api user name>",
