@@ -136,9 +136,9 @@ if __name__ == "__main__":
         print("converting...")
         te = sendToSTT()
         print('\n'+te)
-        if len(te) > 0:
+        if len(te) > 0 && len(te) < 141:
             tweet(tweet_text=te)
             print("Tweeted!")
         else:
-            print("Cancelled because it's empty text.\n")
+            print("Cancelled because it's empty or too many text.\n")
         os.remove(WAVE_FILENAME)
