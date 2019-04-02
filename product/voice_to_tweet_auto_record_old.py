@@ -24,12 +24,17 @@ CONT_TYPE = "audio/wav"
 RECORD_LIMIT = 20
 RECORD_LIMIT_GLOBAL = RATE / CHUNK * RECORD_LIMIT
 
+RECORD_MIN = 2
+RECORD_MIN_GLOBAL = RATE / CHUNK * RECORD_MIN
+
 THRESHOULD = 0.015 # 録音開始閾値
 SILENT_LIMIT = 1.5 # 無音時間
 SILENT_LIMIT_GLOBAL = RATE / CHUNK * SILENT_LIMIT
 
 now_record = 0
 now_silent = 0
+
+exceeded_min = False
 
 t_api_key, t_api_secret, _ = getter.getTwitterAPIConsumer()
 token, token_secret, _, _ = getter.getTwitterAccess()
@@ -47,6 +52,12 @@ auth = twitter.OAuth(consumer_key=t_api_key,
                      token_secret=token_secret)
 
 t = twitter.Twitter(auth=auth)
+
+exceeded_min = False
+
+def isMin():
+    global now_record, exceeded_min
+    exceeded_min = now_record > RECORD_MIN_GLOBAL
 
 def sendToSTT():
     audio_file = open("sample.wav", "rb")
@@ -79,14 +90,17 @@ def record(data):
 def getData():
     return stream.read(CHUNK, exception_on_overflow=False)
 
-def recordComplete():
-    closeAll()
+def outputFile():
     waveFile = wave.open(WAVE_FILENAME, 'wb')
     waveFile.setnchannels(CHANNELS)
     waveFile.setsampwidth(audio.get_sample_size(FORMAT))
     waveFile.setframerate(RATE)
     waveFile.writeframes(b''.join(frames))
     waveFile.close()
+
+def recordComplete():
+    closeAll()
+    isMin()
 
 def closeAll():
     stream.stop_stream()
@@ -132,12 +146,16 @@ if __name__ == "__main__":
         setupRecording()
         checkStart()
         checkStop()
-        print("converting...")
-        te = sendToSTT()
-        print('\n'+te)
-        if len(te) > 0 && len(te) < 141:
-            tweet(tweet_text=te)
-            print("Tweeted!")
+        if exceeded_min:    
+            outputFile()
+            print("converting...")
+            te = sendToSTT()
+            print('\n'+te)
+            if len(te) > 0 and len(te) < 141:
+                tweet(tweet_text=te)
+                print("Tweeted!")
+            else:
+                print("Cancelled because it's empty or too many text.\n")
+            os.remove(WAVE_FILENAME)
         else:
-            print("Cancelled because it's empty or too many text.\n")
-        os.remove(WAVE_FILENAME)
+            print("Cancelled because it's too short.\n")
