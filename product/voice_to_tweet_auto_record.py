@@ -24,7 +24,7 @@ CONT_TYPE = "audio/wav"
 RECORD_LIMIT = 20
 RECORD_LIMIT_GLOBAL = RATE / CHUNK * RECORD_LIMIT
 
-RECORD_MIN = 2
+RECORD_MIN = 2.5
 RECORD_MIN_GLOBAL = RATE / CHUNK * RECORD_MIN
 
 THRESHOULD = 0.015 # 録音開始閾値
@@ -141,21 +141,24 @@ def tweet(tweet_text):
     t.statuses.update(status=tweet_text)
 
 if __name__ == "__main__":
-    while 1:  
-        print("\n<<=========== Voice To Tweet -Auto mode- ===========>>\n")
-        setupRecording()
-        checkStart()
-        checkStop()
-        if exceeded_min:    
-            outputFile()
-            print("converting...")
-            te = sendToSTT()
-            print('\n'+te)
-            if len(te) > 0 and len(te) < 141:
-                tweet(tweet_text=te)
-                print("Tweeted!")
+    while 1:
+        try:
+            print("\n<<=========== Voice To Tweet -Auto mode- ===========>>\n")
+            setupRecording()
+            checkStart()
+            checkStop()
+            if exceeded_min:    
+                outputFile()
+                print("converting...")
+                te = sendToSTT()
+                print('\n'+te)
+                if len(te) > 0 and len(te) < 141:
+                    tweet(tweet_text=te)
+                    print("Tweeted!")
+                else:
+                    print("Cancelled because it's empty or too many text.\n")
+                os.remove(WAVE_FILENAME)
             else:
-                print("Cancelled because it's empty or too many text.\n")
-            os.remove(WAVE_FILENAME)
-        else:
-            print("Cancelled because it's too short.\n")
+                print("Cancelled because it's too short.\n")
+        except:
+            print("error.")
